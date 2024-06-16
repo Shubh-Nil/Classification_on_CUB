@@ -1,1 +1,1 @@
-# Classificationon_on_CUB
+# Classification_on_CUB
