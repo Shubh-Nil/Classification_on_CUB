@@ -3,7 +3,7 @@ from torch import nn, optim
 
 from model import setup_model
 
-def train_model(epochs: int, batch_size: int, learning_rate: float, num_classes: int, model_name: str, device: torch.device):
+def train_model(data_loaders: dict, epochs: int, batch_size: int, learning_rate: float, num_classes: int, model_name: str, device: torch.device):
     '''
 
     '''
