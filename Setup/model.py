@@ -29,31 +29,31 @@ def setup_model(model_name: str, num_classes: int, device: torch.device) -> nn.M
     '''
 
     if model_name == "efficientnet_b0":
-        model = models.efficientnet_b0(pretrained=True).to(device)
+        model = models.efficientnet_b0(pretrained=True)
         num_features = model.classifier[1].in_features                              # extracts the 'number of Input features' from the classifier's final layer
         model.classifier[1] = nn.Linear(in_features=num_features, 
                                         out_features=num_classes)                   # replaces the final linear layer with a new one,
                                                                                     # that has the Number of Output Classes = Number of Bird Species in the Dataset
     elif model_name == "efficientnet_b1":
-        model = models.efficientnet_b1(pretrained=True).to(device)
+        model = models.efficientnet_b1(pretrained=True)
         num_features = model.classifier[1].in_features
         model.classifier[1] = nn.Linear(in_features=num_features, 
                                         out_features=num_classes)
 
     elif model_name == "resnet50":
-        model = models.resnet50(pretrained=True).to(device)
+        model = models.resnet50(pretrained=True)
         num_features = model.fc.in_features
         model.fc = nn.Linear(in_features=num_features, 
                              out_features=num_classes)
 
     elif model_name == "vgg16":
-        model = models.vgg16(pretrained=True).to(device)
+        model = models.vgg16(pretrained=True)
         num_features = model.classifier[6].in_features
         model.classifier[6] = nn.Linear(in_features=num_features, 
                                         out_features=num_classes)
 
     elif model_name == "inception_v3":
-        model = models.inception_v3(pretrained=True).to(device)
+        model = models.inception_v3(pretrained=True)
         num_features = model.fc.in_features
         model.fc = nn.Linear(in_features=num_features, 
                              out_features=num_classes)
@@ -66,4 +66,4 @@ def setup_model(model_name: str, num_classes: int, device: torch.device) -> nn.M
     else:
         raise ValueError(f"Model {model_name} is not supported.")
     
-    return model
+    return model.to(device)

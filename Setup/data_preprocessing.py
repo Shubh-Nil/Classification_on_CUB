@@ -3,7 +3,7 @@ from torchvision import transforms, datasets
 
 def create_dataloaders(train_directory: str, test_directory: str, model_name: str, batch_size: int, num_workers: int) -> dict:
     '''
-
+    
     '''
     # define transforms
     data_transforms = {
@@ -35,11 +35,11 @@ def create_dataloaders(train_directory: str, test_directory: str, model_name: st
         'train': DataLoader(image_datasets['train'], 
                             batch_size = batch_size, 
                             shuffle = True, 
-                            num_workers = 1),
+                            num_workers = num_workers),
         'test': DataLoader(image_datasets['test'],
                            batch_size = batch_size,
                            shuffle = True,
-                           num_workers = 1)
+                           num_workers = num_workers)
     }
 
     return image_dataloaders

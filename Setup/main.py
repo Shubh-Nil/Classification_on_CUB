@@ -1,11 +1,12 @@
 import os
 import subprocess
 import torch
+from tqdm.auto import tqdm
 
 import config
-from data_preprocessing import create_dataloaders
-# from train import train_model
-# from eval import eval_model
+from data_preprocessing import *
+from model import *
+from train import *
 
 
 # check if the Dataset is already cloned
@@ -30,6 +31,7 @@ test_dir = os.path.join(base_dir, 'test')
 
 # Setup device-agnostic code
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+print(f"device used is {device}")
 
 
 # HYPERPARAMETERS
@@ -41,7 +43,7 @@ NUM_CLASSES = config.NUM_CLASSES
 MODEL_NAME = config.MODEL_NAME
   
 
-# Execute data-preprocessing
+# Setup Dataloaders
 dataloaders = create_dataloaders(train_directory = train_dir,
                                  test_directory = test_dir,
                                  model_name = MODEL_NAME,
@@ -50,14 +52,43 @@ dataloaders = create_dataloaders(train_directory = train_dir,
                                  )
 
 
-# Train the model
-# train_model(data_loaders = dataloaders,
-#             epochs=EPOCHS,  
-#             learning_rate = LEARNING_RATE, 
-#             num_classes = NUM_CLASSES, 
-#             model_name = MODEL_NAME, 
-#             device = device)
+# Setup Model, Loss function and Optimizer
+model = setup_model(model_name = MODEL_NAME,
+                    num_classes = NUM_CLASSES,
+                    device = device)
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.SGD(params = model.parameters(),
+                      lr = LEARNING_RATE)
 
 
-# Evaluate the model
-# eval.evaluate_model()
+# Define Accuracy function
+def accuracy_fn(y_true: torch.Tensor, y_pred: torch.Tensor) -> float:
+  '''
+  Out of 100 examples, what percentage does our model get right
+  '''
+  correct = torch.eq(y_true, y_pred).sum().item()     # computes element-wise equality
+  acc = (correct/len(y_pred)) * 100
+  return acc
+
+
+# Setup Training and Evaluation loop
+for epoch in tqdm(range(EPOCHS)):
+  if epoch % 10 == 0:
+    print(f"Epoch: {epoch}")
+
+  train_step(model = model,
+             dataloader = dataloaders['train'],
+             loss_fn = criterion,
+             accuracy_fn = accuracy_fn,
+             optimizer = optimizer,
+             device = device,
+             epoch = epoch)
+  
+  test_step(model = model,
+            dataloader = dataloaders['test'],
+            loss_fn = criterion,
+            accuracy_fn = accuracy_fn,
+            device = device,
+            epoch = epoch)
+  
+  print("\n")
