@@ -4,12 +4,12 @@ import torch
 
 import config
 from data_preprocessing import create_dataloaders
-from train import train_model
-from eval import eval_model
+# from train import train_model
+# from eval import eval_model
 
 
 # check if the Dataset is already cloned
-if not os.path.isdir("CUB-200-2011-dataset"):
+if not os.path.isdir("/home/shubhranil/Classification_on_CUB/Setup/CUB-200-2011-dataset"):
   try:
     # clone the CUB dataset from the following repository, if not available download from other sources.
     subprocess.run(["git", "clone", "https://github.com/cyizhuo/CUB-200-2011-dataset.git"], check=True)
@@ -23,7 +23,7 @@ else:
 
 
 # Setup train and test datapath
-base_dir = 'Setup/CUB-200-2011'
+base_dir = '/home/shubhranil/Classification_on_CUB/Setup/CUB-200-2011-dataset'
 train_dir = os.path.join(base_dir, 'train')
 test_dir = os.path.join(base_dir, 'test')
 
@@ -51,12 +51,12 @@ dataloaders = create_dataloaders(train_directory = train_dir,
 
 
 # Train the model
-train_model(data_loaders = dataloaders,
-            epochs=EPOCHS,  
-            learning_rate = LEARNING_RATE, 
-            num_classes = NUM_CLASSES, 
-            model_name = MODEL_NAME, 
-            device = device)
+# train_model(data_loaders = dataloaders,
+#             epochs=EPOCHS,  
+#             learning_rate = LEARNING_RATE, 
+#             num_classes = NUM_CLASSES, 
+#             model_name = MODEL_NAME, 
+#             device = device)
 
 
 # Evaluate the model
