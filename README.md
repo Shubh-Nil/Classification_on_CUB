@@ -4,34 +4,34 @@ This repository contains code for fine-grained classification on the CUB-200-201
 
 ### Clone the Repository
 
-bash
+```bash
 git clone https://github.com/Shubh-Nil/Classification_on_CUB.git
-
+```
 
 ### Setup the environment
 
-bash
+```bash
 conda create -n cub python==3.12
 conda activate cub
-
+```
 
 ### Install the required packages
 
-bash
+```bash
 pip install -r requirements.txt
-
+```
 
 ### Navigate to the Setup directory, modify the hyperparameters in the config.py file as needed, and save it. Run the main.py script
 
-bash
+```bash
 cd Setup
 # modify config.py
 python main.py
-
+```
 
 ### Structure of the repository
 
-bash
+```bash
 Fine_grained_classification/
 │
 ├── CUB-200-2011-dataset/
@@ -54,12 +54,12 @@ Fine_grained_classification/
 ├── LICENSE
 ├── README.md
 └── requirements.txt
-
+```
 
 
 ### Structure of the CUB-200-2011-dataset
 
-bash
+```bash
 CUB-200-2011-dataset/
 │
 ├── train/
@@ -77,3 +77,4 @@ CUB-200-2011-dataset/
     ├── 002.Laysan_Albatross/
     ├── ...
     └── 200.Common_Yellowthroat/
+```
