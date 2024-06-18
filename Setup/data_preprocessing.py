@@ -3,7 +3,7 @@ from torchvision import transforms, datasets
 
 def create_dataloaders(train_directory: str, test_directory: str, model_name: str, batch_size: int, num_workers: int) -> dict:
     '''
-    
+    Create Datasets and Dataloaders from custom dataset
     '''
     # define transforms
     data_transforms = {
